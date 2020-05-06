@@ -14,17 +14,22 @@ const useStyles = makeStyles({
   },
   form: {
     display: "flex",
+    flexDirection:"column",
+    alignItems:"center",
     justifyContent: "center",
-    padding: "25px"
+    padding: "10 15 25 15"
+  },
+  textfield:{
+    paddingBottom:"25px"
   },
   button: {
-    width: "200px;"
+    width: "200px",
   }
 });
 
 export default function SearchForm(props) {
   const classes = useStyles();
-  const {input, setInputUrl} = props
+  const {input, setInputUrl, handleSubmit} = props
 
   return (
     <div>
@@ -36,20 +41,22 @@ export default function SearchForm(props) {
       >
         Image Scraper
       </Typography>
-      <TextField
-        required
-        label="Enter URL"
-        variant="outlined"
-        value={input}
-        onChange={e=>setInputUrl(e.target.value)}
-        fullWidth={true}
-      />
-      <form className={classes.form}>
+
+      <form className={classes.form} onSubmit={handleSubmit}>
+        <TextField className={classes.textfield}
+          required
+          label="Enter URL"
+          variant="outlined"
+          value={input}
+          onChange={e=>setInputUrl(e.target.value)}
+          fullWidth={true}
+        />
         <Button
           className={classes.button}
           variant="contained"
           color="primary"
           size="large"
+          type="submit"
         >
           Scrape
         </Button>
