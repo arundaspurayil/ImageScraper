@@ -3,9 +3,10 @@ const app = express();
 const ImageScraper = require('./services/ImageScraper')
 
 
-app.get('/api/:url', (req, res) => {
+app.get('/api/:url', async (req, res) => {
     const url = req.params.url
-    res.json(url)
+    const links = await ImageScraper.getAllImages(url)
+    res.json(links)
 })
 
 
