@@ -4,9 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import {
   Button,
   Typography,
-  FormControl,
-  InputLabel,
-  Input,
   TextField
 } from "@material-ui/core";
 
@@ -25,11 +22,9 @@ const useStyles = makeStyles({
   }
 });
 
-export default function SearchForm() {
+export default function SearchForm(props) {
   const classes = useStyles();
-  //      <InputLabel>Enter URL</InputLabel>
-
-  //      <Input fullWidth={true} />
+  const {input, setInputUrl} = props
 
   return (
     <div>
@@ -45,6 +40,8 @@ export default function SearchForm() {
         required
         label="Enter URL"
         variant="outlined"
+        value={input}
+        onChange={e=>setInputUrl(e.target.value)}
         fullWidth={true}
       />
       <form className={classes.form}>

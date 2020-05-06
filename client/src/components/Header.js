@@ -2,9 +2,7 @@ import React from "react";
 import {
   AppBar,
   Toolbar,
-  IconButton,
   Typography,
-  Button
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/styles";
