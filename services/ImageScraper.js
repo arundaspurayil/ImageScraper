@@ -1,25 +1,43 @@
 const puppeteer = require('puppeteer');
+const parseurl=require('url');
 
 async function getLinksFromPage(page, url){
     //Retrieves all links on the page
-    let hrefs = await page.$$eval('a', as => as.map(a => a.href))
+    let hrefs = await page.$$eval('a', as => as.map(a => a.href.trim()))
     //Filters URLs that are apart of the same domain as provided URL
-    const domainLinks = hrefs.filter(href => href.includes(url))
-    return domainLinks
+    const domainName = parseurl.parse(url).hostname    
+    let domainLinks = hrefs.filter((href, index) => {
+        let unique = hrefs.indexOf(href) == index
+        let correctHost = href.includes(domainName)
+        return unique && correctHost
+    })
+    await visitSubPages(page, domainLinks)
+
 }
 
 exports.getAllImages = async function(url){
-    const images = []
-    let links = []
+    let images = []
 
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
-    await page.goto(url)
 
-    let hrefs = await getLinksFromPage(page, url)
-    links = links.concat(hrefs)
+    await page.setRequestInterception(true);
+    page.on('request', request => {
+        if (request.resourceType() === 'image')
+            images.push(request.url())
+
+        request.continue();
+    });
+
+
+    await page.goto(url, {
+        waitUntil: 'domcontentloaded'
+    });
+
+    await getLinksFromPage(page, url)
+    
 
     await browser.close();
 
-    return links
+    return images
 }

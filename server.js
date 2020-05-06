@@ -4,7 +4,9 @@ const ImageScraper = require('./services/ImageScraper')
 
 
 app.get('/api/:url', async (req, res) => {
+    req.setTimeout(0)
     const url = req.params.url
+    console.log("H")
     const links = await ImageScraper.getAllImages(url)
     res.json(links)
 })
