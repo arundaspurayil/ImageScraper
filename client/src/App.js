@@ -10,6 +10,9 @@ export default function App() {
   const [renderImages, setRenderImages] = useState(false)
   function handleSubmit(event){
     event.preventDefault()
+    if(renderImages){
+      setRenderImages(false)
+    }
     setRenderImages(true)
   }
 

@@ -17,7 +17,7 @@ const useStyles = makeStyles({
     flexDirection:"column",
     alignItems:"center",
     justifyContent: "center",
-    padding: "10 15 25 15"
+    padding: "10px 15px 50px 15px"
   },
   textfield:{
     paddingBottom:"25px"
