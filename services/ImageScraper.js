@@ -15,6 +15,23 @@ async function getLinksFromPage(page, url){
 
 }
 
+async function visitSubPages(page, links){
+    let visitedUrls = []
+
+    while(links.length > 0){
+        let url = links.pop()
+        console.log(links.length)
+        if(!visitedUrls.includes(url)){
+            await page.goto(url, {
+                waitUntil: 'domcontentloaded'
+            });
+
+            visitedUrls.push(url)
+        } 
+    }
+
+}
+
 exports.getAllImages = async function(url){
     let images = []
 
