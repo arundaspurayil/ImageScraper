@@ -1,13 +1,29 @@
-import React from 'react';
-import './App.css';
-import Header from "./components/Header.js";
+import React from "react";
+import "./styles.css";
+import { Grid } from "@material-ui/core";
 
-function App() {
+import Header from "./components/Header.js";
+import SearchForm from "./components/SearchForm.js";
+import Images from "./components/Images.js";
+export default function App() {
   return (
     <div className="App">
-      <Header />
+      <Grid container direction="column">
+        <Grid item>
+          <Header />
+        </Grid>
+
+        <Grid item container>
+          <Grid item xs={2} md={2} />
+          <Grid item xs={8} md={8}>
+            <Grid item>
+              <SearchForm />
+            </Grid>
+            <Images />
+          </Grid>
+          <Grid item xs={2} md={2} />
+        </Grid>
+      </Grid>
     </div>
   );
 }
-
-export default App;
