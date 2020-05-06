@@ -1,0 +1,26 @@
+{
+  "name": "imagescraper",
+  "version": "1.0.0",
+  "description": "Web app that scrapes all images from inputted web page and all sub-pages.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arundaspurayil/ImageScraper.git"
+  },
+  "author": "Arundas Purayil",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arundaspurayil/ImageScraper/issues"
+  },
+  "homepage": "https://github.com/arundaspurayil/ImageScraper#readme",
+  "dependencies": {
+    "concurrently": "^5.2.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.3"
+  }
+}
