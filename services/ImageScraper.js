@@ -56,5 +56,5 @@ exports.getAllImages = async function(url){
 
     await browser.close();
 
-    return images
+    return { "images": images }
 }

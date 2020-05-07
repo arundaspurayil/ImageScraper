@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.2.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-loading": "^2.0.3",
     "react-scripts": "3.4.1"
   },
   "scripts": {
@@ -35,7 +36,7 @@
       "last 1 safari version"
     ]
   },
-  "prettier":{
+  "prettier": {
     "trailingComma": "es5",
     "tabWidth": 4,
     "semi": false,

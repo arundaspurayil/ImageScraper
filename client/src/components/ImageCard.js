@@ -8,8 +8,9 @@ export default function ImageCard(props) {
         height: 'auto',
         width: '100%',
         overflow: 'hidden',
-        boxShadow: '0px 4px 8px 0px rgba(0,0,0,0.2)',
+        boxShadow: '0px 8px 25px 0px rgba(0,0,0,0.2)',
         transition: '0.3s',
+        backgroundColor: 'white',
     }
     const imgStyle = {
         height: 'auto',
