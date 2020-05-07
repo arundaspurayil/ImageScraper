@@ -6,17 +6,14 @@ import SearchForm from "./components/SearchForm.js";
 import Images from "./components/Images.js";
 export default function App() {
 
-  const [inputUrl, setInputUrl] = useState("")
-  const [renderImages, setRenderImages] = useState(false)
-  function handleSubmit(event){
+  const [url, setUrl] = useState(null)
+
+  function handleSubmit(event, url){
     event.preventDefault()
-    if(renderImages){
-      setRenderImages(false)
-    }
-    setRenderImages(true)
+    setUrl(url)
   }
 
-  const imagesComponent = renderImages ? <Images url={inputUrl} /> : null
+  const imagesComponent = url ? <Images url={url} /> : null
 
   return (
     <div className="App">
@@ -28,9 +25,7 @@ export default function App() {
           <Grid item xs={2} md={2} />
           <Grid item xs={8} md={8}>
             <Grid item>
-              <SearchForm 
-                input={inputUrl} 
-                setInputUrl={setInputUrl} 
+              <SearchForm  
                 handleSubmit={handleSubmit}
               />
             </Grid>

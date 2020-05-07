@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
 import {
@@ -23,13 +23,14 @@ const useStyles = makeStyles({
     paddingBottom:"25px"
   },
   button: {
-    width: "200px",
+    width: "200px"
   }
 });
 
 export default function SearchForm(props) {
   const classes = useStyles();
-  const {input, setInputUrl, handleSubmit} = props
+  const [input, setInput] = useState("")
+  const {handleSubmit} = props
 
   return (
     <div>
@@ -42,13 +43,13 @@ export default function SearchForm(props) {
         Image Scraper
       </Typography>
 
-      <form className={classes.form} onSubmit={handleSubmit}>
+      <form className={classes.form} onSubmit={e=>handleSubmit(e,input)}>
         <TextField className={classes.textfield}
           required
           label="Enter URL"
           variant="outlined"
           value={input}
-          onChange={e=>setInputUrl(e.target.value)}
+          onChange={e=>setInput(e.target.value)}
           fullWidth={true}
         />
         <Button
