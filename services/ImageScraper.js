@@ -2,6 +2,7 @@ const puppeteer = require('puppeteer')
 const parseurl = require('url')
 const axios = require('axios')
 const archiver = require('archiver')
+
 async function getLinksFromPage(page, url) {
     //Retrieves all links on the page
     let hrefs = await page.$$eval('a', (as) => as.map((a) => a.href.trim()))
@@ -25,7 +26,6 @@ async function visitSubPages(page, links) {
             await page.goto(url, {
                 waitUntil: 'domcontentloaded',
             })
-
             visitedUrls.push(url)
         }
     }
@@ -43,16 +43,13 @@ exports.getAllImages = async function (url) {
 
         request.continue()
     })
-
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     })
-
     await getLinksFromPage(page, url)
-
     await browser.close()
 
-    return { images: images }
+    return images
 }
 
 exports.downloadImages = async function (output, images) {

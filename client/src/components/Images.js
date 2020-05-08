@@ -13,7 +13,7 @@ export default function Images(props) {
             //base-64 encode url ATOB
             setIsLoading(true)
             const encodedURI = encodeURIComponent(url)
-            const res = await fetch('/api/' + encodedURI)
+            const res = await fetch('/api/scrape/' + encodedURI)
             const images = await res.json()
             setImages(images.images)
             setIsLoading(false)
