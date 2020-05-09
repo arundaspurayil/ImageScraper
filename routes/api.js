@@ -1,12 +1,16 @@
 const express = require('express')
 const router = express.Router()
+const fs = require('fs')
 const axios = require('axios')
 const client = require('../redis')
-const cache = require('../middleware')
+const middleware = require('../middleware')
 const getAllImages = require('../services/ImageScraper')
 const downloadImages = require('../services/ImageDownloader')
 
-router.get('/download', async (req, res) => {
+router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
+    req.setTimeout(0)
+    let images = req.images
+
     let output = fs.createWriteStream(__dirname + '/example.zip')
     downloadImages(output, images)
     output.on('close', function () {
@@ -14,7 +18,7 @@ router.get('/download', async (req, res) => {
     })
 })
 
-router.get('/scrape/:url', cache, async (req, res) => {
+router.get('/scrape/:url', middleware.cache, async (req, res) => {
     req.setTimeout(0)
     const url = decodeURIComponent(req.params.url)
 
@@ -22,7 +26,6 @@ router.get('/scrape/:url', cache, async (req, res) => {
     const headers = response.headers
     const lastModified = headers['last-modified']
 
-    console.log(url)
     const links = await getAllImages(url)
 
     const images = { images: links }

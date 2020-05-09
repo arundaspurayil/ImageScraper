@@ -24,13 +24,18 @@ async function downloadImages(output, images) {
     })
 
     archive.pipe(output)
-
     while (images.length > 0) {
         let image = images.pop()
+        console.log(image)
         const fileName = image.split('/').pop()
-        const response = await axios.get(image, { responseType: 'arraybuffer' })
-        const buffer = Buffer.from(response.data, 'utf-8')
-        archive.append(buffer, { name: fileName })
+        const response = await axios.get(image, {
+            validateStatus: false,
+            responseType: 'arraybuffer',
+        })
+        if (response.status == 200) {
+            const buffer = Buffer.from(response.data, 'utf-8')
+            archive.append(buffer, { name: fileName })
+        }
     }
 
     archive.finalize()
