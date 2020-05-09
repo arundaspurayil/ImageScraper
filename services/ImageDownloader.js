@@ -1,7 +1,7 @@
 const axios = require('axios')
 const archiver = require('archiver')
 
-exports.downloadImages = async function (output, images) {
+async function downloadImages(output, images) {
     let archive = archiver('zip', {
         zlib: { level: 9 }, // Sets the compression level.
     })
@@ -35,3 +35,5 @@ exports.downloadImages = async function (output, images) {
 
     archive.finalize()
 }
+
+module.exports = downloadImages
