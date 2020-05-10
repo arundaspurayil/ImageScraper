@@ -28,6 +28,7 @@ exports.cache = async function (req, res, next) {
                 return res.json({ images: data.images })
             }
         }
+        req.lastModified = lastModified
         next()
     })
 }

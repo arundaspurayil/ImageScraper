@@ -21,13 +21,9 @@ router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
 router.get('/scrape/:url', middleware.cache, async (req, res) => {
     req.setTimeout(0)
     const url = decodeURIComponent(req.params.url)
-
-    const response = await axios.get(url)
-    const headers = response.headers
-    const lastModified = headers['last-modified']
+    const lastModified = req.lastModified
 
     const links = await getAllImages(url)
-
     const images = { images: links }
 
     client.set(url, JSON.stringify({ ...images, lastModified: lastModified }))
