@@ -14,6 +14,8 @@ const useStyles = makeStyles({
     },
     button: {
         width: '200px',
+        textAlign: 'center',
+        margin: '5px 20px 15px 20px',
     },
     divider: {
         width: '5%',
@@ -80,7 +82,6 @@ export default function SearchForm(props) {
                 >
                     Scrape
                 </Button>
-                {download ? <div className={classes.divider} /> : null}
                 {downloadButton}
             </div>
         </div>
