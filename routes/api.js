@@ -17,7 +17,6 @@ router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
         res.download(__dirname + '/example.zip')
     })
 })
-
 router.get('/scrape/:url', middleware.cache, async (req, res) => {
     req.setTimeout(0)
     const url = decodeURIComponent(req.params.url)

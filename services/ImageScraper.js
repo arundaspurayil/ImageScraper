@@ -37,7 +37,15 @@ async function getAllImages(url) {
 
     await page.setRequestInterception(true)
     page.on('request', (request) => {
-        if (request.resourceType() === 'image') images.push(request.url())
+        let reqUrl = request.url()
+        if (
+            reqUrl.endsWith('.png') ||
+            reqUrl.endsWith('.jpg') ||
+            reqUrl.endsWith('.gif') ||
+            reqUrl.endsWith('.svg')
+        ) {
+            images.push(request.url())
+        }
 
         request.continue()
     })
