@@ -4,16 +4,25 @@ import { Grid } from '@material-ui/core'
 import Header from './components/Header.js'
 import SearchForm from './components/SearchForm.js'
 import Images from './components/Images.js'
+import validUrl from 'valid-url'
+
 import './App.css'
 export default function App() {
     const [url, setUrl] = useState(null)
     const [download, setDownload] = useState(false)
     const [downloadText, setDownloadText] = useState('Download as ZIP')
+    const [urlError, setUrlError] = useState('')
 
     function handleSubmit(event, url) {
         event.preventDefault()
-        setUrl(url)
-        setDownload(false)
+        if (validUrl.isWebUri(url)) {
+            setUrl(url)
+            setDownload(false)
+            setDownloadText('Download as ZIP')
+            setUrlError('')
+        } else {
+            setUrlError('Enter a valid URL.')
+        }
     }
     async function handleDownload(event) {
         event.preventDefault()
@@ -25,14 +34,17 @@ export default function App() {
             let url = window.URL.createObjectURL(blob)
             let a = document.createElement('a')
             a.href = url
-            a.download = 'ScrapedImage.zip'
+            document.body.appendChild(a)
+
+            a.download = 'ScrapedImages.zip'
             a.click()
+            a.parentNode.removeChild(a)
             setDownloadText('Download as ZIP')
         })
     }
 
     const imagesComponent = url ? (
-        <Images url={url} download={download} setDownload={setDownload} />
+        <Images url={url} setDownload={setDownload} />
     ) : null
 
     return (
@@ -50,6 +62,7 @@ export default function App() {
                                 handleDownload={handleDownload}
                                 download={download}
                                 downloadText={downloadText}
+                                error={urlError}
                             />
                         </Grid>
                         {imagesComponent}

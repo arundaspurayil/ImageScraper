@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import Alert from '@material-ui/lab/Alert'
 
 import { Button, Typography, TextField } from '@material-ui/core'
 
@@ -24,7 +25,13 @@ const useStyles = makeStyles({
 export default function SearchForm(props) {
     const classes = useStyles()
     const [input, setInput] = useState('')
-    const { handleSubmit, handleDownload, download, downloadText } = props
+    const {
+        handleSubmit,
+        handleDownload,
+        download,
+        downloadText,
+        error,
+    } = props
     console.log('rendering')
 
     const downloadButton = download ? (
@@ -50,7 +57,9 @@ export default function SearchForm(props) {
             >
                 Image Scraper
             </Typography>
-
+            {error.length > 0 ? (
+                <Alert severity="warning">{error}</Alert>
+            ) : null}
             <TextField
                 className={classes.textfield}
                 required
