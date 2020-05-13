@@ -26,7 +26,6 @@ async function downloadImages(output, images) {
     archive.pipe(output)
     while (images.length > 0) {
         let image = images.pop()
-        console.log(image)
         const fileName = image.split('/').pop()
         const response = await axios.get(image, {
             validateStatus: false,
