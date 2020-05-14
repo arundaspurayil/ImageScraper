@@ -1,9 +1,9 @@
 const redis = require('redis')
 //Sets values for clinet to connect to the Redis database
 const client = redis.createClient({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT || 6379,
-    password: process.env.REDIS_PASSWORD,
+    host: process.env.REDIS_LAB_HOST,
+    port: process.env.REDIS_LAB_PORT || 6379,
+    password: process.env.REDIS_LAB_PASSWORD,
 })
 
 //client connects to database

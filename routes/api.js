@@ -2,10 +2,14 @@ const express = require('express')
 const router = express.Router()
 const fs = require('fs')
 const axios = require('axios')
+let Queue = require('bull')
+
 const client = require('../redis')
 const middleware = require('../middleware')
 const getAllImages = require('../services/ImageScraper')
 const downloadImages = require('../services/ImageDownloader')
+
+const scraperQueue = new Queue('scraper', client)
 
 router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
     req.setTimeout(0)
@@ -17,17 +21,29 @@ router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
         res.download(__dirname + '/example.zip')
     })
 })
-router.get('/scrape/:url', middleware.cache, async (req, res) => {
-    req.setTimeout(0)
+// middleware.cache,
+router.get('/scrape/:url', async (req, res) => {
     const url = decodeURIComponent(req.params.url)
-    const lastModified = req.lastModified
-
-    const links = await getAllImages(url)
-    const images = { images: links }
-
-    client.set(url, JSON.stringify({ ...images, lastModified: lastModified }))
-
-    res.json(images)
+    let job = await scraperQueue.add({ url: url })
+    const jobId = { id: job.id }
+    res.json(jobId)
 })
 
+//Cache images
+scraperQueue.on('global:completed', async (jobId) => {
+    const job = await scraperQueue.getJob(jobId)
+    const { url } = job.data
+    const images = job.returnvalue
+
+    const response = await axios.get(url)
+    const headers = response.headers
+    const lastModified = headers['last-modified']
+
+    client.set(
+        url,
+        JSON.stringify({ ...images, lastModified: lastModified }),
+        'EX',
+        60 * 60 * 24
+    )
+})
 module.exports = router

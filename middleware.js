@@ -23,6 +23,7 @@ exports.cache = async function (req, res, next) {
     client.get(url, (error, value) => {
         if (error) throw error
         if (value) {
+            console.log(value)
             const data = JSON.parse(value)
             if (data.lastModified === lastModified) {
                 return res.json({ images: data.images })

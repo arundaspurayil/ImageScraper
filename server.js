@@ -3,10 +3,12 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const apiRouter = require('./routes/api')
+const jobRouter = require('./routes/job')
 
 const PORT = process.env.PORT || '5000'
 
 app.use('/api', apiRouter)
+app.use('/job', jobRouter)
 
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, 'client', 'build')))
