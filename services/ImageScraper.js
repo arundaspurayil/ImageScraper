@@ -19,7 +19,6 @@ async function visitSubPages(page, links) {
 
     while (links.length > 0) {
         let url = links.pop()
-        console.log(links.length)
         if (!visitedUrls.includes(url)) {
             await page.goto(url, {
                 waitUntil: 'domcontentloaded',
@@ -32,9 +31,12 @@ async function visitSubPages(page, links) {
 async function getAllImages(url) {
     let images = []
 
-    const browser = await puppeteer.launch({
+    /*
+{
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
+    }
+    */
+    const browser = await puppeteer.launch()
     const page = await browser.newPage()
 
     await page.setRequestInterception(true)
@@ -54,6 +56,7 @@ async function getAllImages(url) {
     await page.goto(url, {
         waitUntil: 'domcontentloaded',
     })
+
     await getLinksFromPage(page, url)
     await browser.close()
 

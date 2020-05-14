@@ -7,6 +7,7 @@ export default function Images(props) {
 
     const [images, setImages] = useState([])
     const [isLoading, setIsLoading] = useState(null)
+    const [jobId, setJobId] = useState(null)
 
     useEffect(() => {
         async function fetchMyAPI() {
@@ -14,13 +15,37 @@ export default function Images(props) {
             setIsLoading(true)
             const encodedURI = encodeURIComponent(url)
             const res = await fetch('/api/scrape/' + encodedURI)
-            const images = await res.json()
+            const data = await res.json()
+            const jobId = data.id
+            setJobId(jobId)
+
+            /*
             setImages(images.images)
             setIsLoading(false)
             setDownload(true)
+            */
         }
         fetchMyAPI()
-    }, [url, setDownload])
+    }, [url])
+
+    useEffect(() => {
+        if (jobId) {
+            const interval = setInterval(async () => {
+                let res = await fetch('/job/' + jobId)
+                if (res.status !== 404) {
+                    let data = await res.json()
+                    console.log(data)
+                    if (data.state === 'completed') {
+                        clearInterval(interval)
+                        setImages(data.images)
+                        setIsLoading(false)
+                        setDownload(true)
+                        setJobId(null)
+                    }
+                }
+            }, 3000)
+        }
+    }, [jobId, setDownload])
 
     const imageCards = images.map((image, index) => {
         return <ImageCard key={index} imgSrc={image} />

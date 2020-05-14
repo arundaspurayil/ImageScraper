@@ -13,13 +13,11 @@ router.get('/:id', async (req, res) => {
         res.status(404).end()
     } else {
         let state = await job.getState()
-        const data = { test: 'hey' }
-
         if (job.returnvalue) {
             let { images } = job.returnvalue
-            res.json(data)
+            res.json({ state: state, images: images })
         } else {
-            res.json(data)
+            res.json({ state: state })
         }
     }
 })

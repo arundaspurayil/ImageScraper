@@ -34,7 +34,6 @@ export default function SearchForm(props) {
         downloadText,
         error,
     } = props
-    console.log('rendering')
 
     const downloadButton = download ? (
         <Button

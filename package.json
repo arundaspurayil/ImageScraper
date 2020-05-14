@@ -22,13 +22,16 @@
     "dependencies": {
         "archiver": "^4.0.1",
         "axios": "^0.19.2",
+        "bull": "^3.14.0",
         "concurrently": "^5.2.0",
         "dotenv": "^8.2.0",
         "express": "^4.17.1",
+        "ioredis": "^4.16.3",
         "node-fetch": "^2.6.0",
         "nodemon": "^2.0.3",
         "puppeteer": "^3.0.2",
         "redis": "^3.0.2",
+        "throng": "^4.0.0",
         "url": "^0.11.0",
         "valid-url": "^1.0.9"
     },
@@ -37,6 +40,5 @@
         "tabWidth": 4,
         "semi": false,
         "singleQuote": true
-    },
-    "proxy": "http://localhost:5000"
+    }
 }
