@@ -22,6 +22,7 @@ async function visitSubPages(page, links) {
     while (links.length > 0) {
         let url = links.pop()
         if (!visitedUrls.includes(url)) {
+            console.log(url)
             await page.goto(url, {
                 waitUntil: 'domcontentloaded',
             })

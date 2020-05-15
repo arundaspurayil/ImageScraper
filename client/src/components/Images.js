@@ -16,8 +16,14 @@ export default function Images(props) {
             const encodedURI = encodeURIComponent(url)
             const res = await fetch('/api/scrape/' + encodedURI)
             const data = await res.json()
-            const jobId = data.id
-            setJobId(jobId)
+            if (data.images) {
+                setImages(data.images)
+                setIsLoading(false)
+                setDownload(true)
+            } else {
+                const jobId = data.id
+                setJobId(jobId)
+            }
         }
         fetchMyAPI()
     }, [url])
@@ -28,6 +34,7 @@ export default function Images(props) {
                 let res = await fetch('/job/' + jobId)
                 if (res.status !== 404) {
                     let data = await res.json()
+                    console.log(data)
                     if (data.state === 'completed') {
                         clearInterval(interval)
                         setImages(data.images)
