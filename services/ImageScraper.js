@@ -34,12 +34,9 @@ async function visitSubPages(page, links) {
 async function getAllImages(url) {
     let images = []
 
-    /*
-{
+    const browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    }
-    */
-    const browser = await puppeteer.launch()
+    })
     const page = await browser.newPage()
 
     await page.setRequestInterception(true)
