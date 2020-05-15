@@ -8,6 +8,7 @@ const middleware = require('../middleware')
 const getAllImages = require('../services/ImageScraper')
 const downloadImages = require('../services/ImageDownloader')
 
+const client = require('../redis')
 const opts = require('../worker_redis')
 const scraperQueue = new Queue('scraper', opts)
 
