@@ -9,7 +9,9 @@ async function getLinksFromPage(page, url) {
     let domainLinks = hrefs.filter((href, index) => {
         let unique = hrefs.indexOf(href) == index
         let correctHost = href.includes(domainName)
-        return unique && correctHost
+        let isPDF = !href.split('/').pop().includes('.pdf')
+
+        return unique && correctHost && isPDF
     })
     await visitSubPages(page, domainLinks)
 }
