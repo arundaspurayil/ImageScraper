@@ -4,12 +4,12 @@ const fs = require('fs')
 const axios = require('axios')
 let Queue = require('bull')
 
-const client = require('../redis')
 const middleware = require('../middleware')
 const getAllImages = require('../services/ImageScraper')
 const downloadImages = require('../services/ImageDownloader')
 
-const scraperQueue = new Queue('scraper', client)
+let REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+const scraperQueue = new Queue('scraper', REDIS_URL)
 
 router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
     req.setTimeout(0)
