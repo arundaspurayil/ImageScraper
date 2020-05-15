@@ -21,8 +21,8 @@ router.get('/download/:url', middleware.getCachedImages, async (req, res) => {
         res.download(__dirname + '/example.zip')
     })
 })
-// middleware.cache,
-router.get('/scrape/:url', async (req, res) => {
+
+router.get('/scrape/:url', middleware.cache, async (req, res) => {
     const url = decodeURIComponent(req.params.url)
     let job = await scraperQueue.add({ url: url })
     const jobId = { id: job.id }

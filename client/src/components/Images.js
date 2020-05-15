@@ -18,12 +18,6 @@ export default function Images(props) {
             const data = await res.json()
             const jobId = data.id
             setJobId(jobId)
-
-            /*
-            setImages(images.images)
-            setIsLoading(false)
-            setDownload(true)
-            */
         }
         fetchMyAPI()
     }, [url])
@@ -34,7 +28,6 @@ export default function Images(props) {
                 let res = await fetch('/job/' + jobId)
                 if (res.status !== 404) {
                     let data = await res.json()
-                    console.log(data)
                     if (data.state === 'completed') {
                         clearInterval(interval)
                         setImages(data.images)
