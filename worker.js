@@ -1,7 +1,7 @@
 let throng = require('throng')
 let Queue = require('bull')
 
-let REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+const opts = require('./worker_redis')
 
 const getAllImages = require('./services/ImageScraper')
 
@@ -10,7 +10,7 @@ let workers = process.env.WEB_CONCURRENCY || 1
 let maxJobsPerWorker = 50
 
 function start() {
-    let scraperQueue = new Queue('scraper', REDIS_URL)
+    let scraperQueue = new Queue('scraper', opts)
 
     scraperQueue.process(maxJobsPerWorker, async (job) => {
         const url = job.data.url

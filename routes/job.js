@@ -2,10 +2,10 @@ const express = require('express')
 const router = express.Router()
 
 let Queue = require('bull')
-let REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379'
+const opts = require('../worker_redis')
 
 router.get('/:id', async (req, res) => {
-    let scraperQueue = new Queue('scraper', REDIS_URL)
+    let scraperQueue = new Queue('scraper', opts)
     const id = req.params.id
     let job = await scraperQueue.getJob(id)
 
