@@ -28,19 +28,35 @@ export default function App() {
         event.preventDefault()
         setDownloadText('Downloading...')
         const encodedURI = encodeURIComponent(url)
-        const response = await fetch('/api/download/' + encodedURI)
+        const res = await fetch('/api/download/' + encodedURI)
+        const data = await res.json()
+        const jobId = data.id
+        pingDownload(jobId)
+    }
 
-        response.blob().then((blob) => {
-            let url = window.URL.createObjectURL(blob)
-            let a = document.createElement('a')
-            a.href = url
-            document.body.appendChild(a)
+    async function pingDownload(jobId) {
+        const interval = setInterval(async () => {
+            let res = await fetch('/job/download/' + jobId)
+            if (res.status !== 404) {
+                let data = await res.json()
+                if (data.state === 'completed') {
+                    clearInterval(interval)
+                    const { downloadUrl } = data
+                    const s3Response = await fetch(downloadUrl)
+                    s3Response.blob().then((blob) => {
+                        let url = window.URL.createObjectURL(blob)
+                        let a = document.createElement('a')
+                        a.href = url
+                        document.body.appendChild(a)
 
-            a.download = 'ScrapedImages.zip'
-            a.click()
-            a.parentNode.removeChild(a)
-            setDownloadText('Download as ZIP')
-        })
+                        a.download = 'ScrapedImages.zip'
+                        a.click()
+                        a.parentNode.removeChild(a)
+                        setDownloadText('Download as ZIP')
+                    })
+                }
+            }
+        }, 3000)
     }
 
     const imagesComponent = url ? (

@@ -26,15 +26,14 @@ export default function Images(props) {
             }
         }
         fetchMyAPI()
-    }, [url])
+    }, [url, setDownload])
 
     useEffect(() => {
         if (jobId) {
             const interval = setInterval(async () => {
-                let res = await fetch('/job/' + jobId)
+                let res = await fetch('/job/scrape/' + jobId)
                 if (res.status !== 404) {
                     let data = await res.json()
-                    console.log(data)
                     if (data.state === 'completed') {
                         clearInterval(interval)
                         setImages(data.images)
