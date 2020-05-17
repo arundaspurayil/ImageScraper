@@ -1,10 +1,11 @@
 const axios = require('axios')
 const archiver = require('archiver')
 const fs = require('fs')
-
+const randomHash = require('random-hash')
 async function downloadImages(images) {
     return new Promise(async (resolve, reject) => {
-        let output = fs.createWriteStream(__dirname + '/example.zip')
+        const hash = randomHash.generateHash()
+        let output = fs.createWriteStream(`${__dirname}/${hash}.zip`)
 
         let archive = archiver('zip', {
             zlib: { level: 9 }, // Sets the compression level.
@@ -43,7 +44,7 @@ async function downloadImages(images) {
         archive.finalize()
 
         output.on('close', function () {
-            resolve(__dirname + '/example.zip')
+            resolve(`${__dirname}/${hash}.zip`)
         })
     })
 }

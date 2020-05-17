@@ -31,6 +31,7 @@
         "node-fetch": "^2.6.0",
         "nodemon": "^2.0.3",
         "puppeteer": "^3.0.2",
+        "random-hash": "^4.0.1",
         "redis": "^3.0.2",
         "throng": "^4.0.0",
         "url": "^0.11.0",

@@ -4,17 +4,18 @@ const fs = require('fs')
 
 async function upload(zipPath) {
     return new Promise((resolve, reject) => {
+        const fileName = zipPath.split('/').pop()
         fs.readFile(zipPath, function (err, data) {
             if (err) reject(err)
             const params = {
                 Bucket: 'imagescraperzips',
-                Key: 'example.zip',
+                Key: fileName,
                 Body: data,
             }
 
             s3.upload(params, function (err, data) {
                 if (err) console.log('ERROR MSG: ', err)
-                resolve('https://imagescraperzips.s3.amazonaws.com/example.zip')
+                resolve(`https://imagescraperzips.s3.amazonaws.com/${fileName}`)
             })
         })
     })
