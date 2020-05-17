@@ -1,5 +1,6 @@
 let throng = require('throng')
 let Queue = require('bull')
+const fs = require('fs')
 
 const opts = require('./worker_redis')
 
@@ -25,6 +26,7 @@ function start() {
         const images = job.data.images
         const zipPath = await downloadImages(images)
         const awsUrl = await upload(zipPath)
+        fs.unlinkSync(zipPath)
 
         return { downloadUrl: awsUrl }
     })
