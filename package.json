@@ -21,6 +21,7 @@
     "homepage": "https://github.com/arundaspurayil/ImageScraper#readme",
     "dependencies": {
         "archiver": "^4.0.1",
+        "aws-sdk": "^2.678.0",
         "axios": "^0.19.2",
         "bull": "^3.14.0",
         "concurrently": "^5.2.0",
