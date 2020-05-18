@@ -49,11 +49,11 @@ export default function SearchForm(props) {
     //
 
     return (
-        <div>
+        <div className="searchForm">
             <Typography
                 className={classes.header}
                 color="primary"
-                variant="h1"
+                variant="h2"
                 align="center"
             >
                 Image Scraper
@@ -64,7 +64,7 @@ export default function SearchForm(props) {
             <TextField
                 className={classes.textfield}
                 required
-                label="Enter URL"
+                label="Enter URL to scrape images from"
                 variant="outlined"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}

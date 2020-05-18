@@ -66,9 +66,6 @@ export default function App() {
     return (
         <div className="App">
             <Grid container direction="column">
-                <Grid item>
-                    <Header />
-                </Grid>
                 <Grid item container>
                     <Grid item xs={2} md={2} />
                     <Grid item xs={8} md={8}>
@@ -81,6 +78,7 @@ export default function App() {
                                 error={urlError}
                             />
                         </Grid>
+
                         {imagesComponent}
                     </Grid>
                     <Grid item xs={2} md={2} />

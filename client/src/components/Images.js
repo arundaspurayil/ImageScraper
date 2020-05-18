@@ -51,7 +51,7 @@ export default function Images(props) {
     })
 
     return (
-        <div>
+        <div className="images">
             {isLoading ? (
                 <Loading />
             ) : (
