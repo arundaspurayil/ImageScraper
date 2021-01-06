@@ -22,7 +22,7 @@
     "dependencies": {
         "archiver": "^4.0.1",
         "aws-sdk": "^2.678.0",
-        "axios": "^0.19.2",
+        "axios": "^0.21.1",
         "bull": "^3.14.0",
         "concurrently": "^5.2.0",
         "dotenv": "^8.2.0",
